@@ -8,21 +8,20 @@ public class EnemyMovement : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float moveSpeed;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        player = FindFirstObjectByType<Player>();
-
-        if (player == null)
-        {
-            Debug.LogWarning("No player, auto-destroying");
-
-            Destroy(gameObject);
-        }
-    }
 
     // Update is called once per frame
-    void Update()   
+    void Update()
+    {
+        if (player != null) 
+            FollowPlayer();
+    }
+
+    public void StorePlayer(Player player)
+    {
+        this.player = player;   
+    }
+  
+    private void FollowPlayer()
     {
         Vector2 dicrection = (player.transform.position - transform.position).normalized;
 
@@ -30,4 +29,5 @@ public class EnemyMovement : MonoBehaviour
 
         transform.position = targetPosition;
     }
+
 }
