@@ -22,8 +22,8 @@ public class Weapon : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] private int damage;
-    [SerializeField] private Animator animator;
     [SerializeField] private float attackDelay;
+    [SerializeField] private Animator animator;
     private float attackTimer;
 
     private List<Enemy> damagedEnemies = new List<Enemy>(); 
@@ -94,6 +94,7 @@ public class Weapon : MonoBehaviour
         state = State.Attack;
 
         damagedEnemies.Clear();
+        animator.speed = 1f / attackDelay;
     }
     private void Attacking()
     {
