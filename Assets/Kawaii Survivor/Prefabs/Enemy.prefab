@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1383299329997284723
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5222,6 +5222,7 @@ MonoBehaviour:
   healthText: {fileID: 3317739463476051833}
   renderer: {fileID: 4855291132650883720}
   spawnIndicator: {fileID: 2513552975682435859}
+  collider: {fileID: -2949232839762584341}
   passAwayParticles: {fileID: 8279097215616685989}
   damage: 1
   attackFrequency: 1
@@ -5247,7 +5248,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5955934464159482422}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
