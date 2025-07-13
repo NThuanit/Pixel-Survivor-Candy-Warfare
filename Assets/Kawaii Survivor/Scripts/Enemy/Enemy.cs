@@ -1,48 +1,42 @@
-﻿using UnityEngine;
-using TMPro;
 using System;
+using UnityEngine;
 
-[RequireComponent(typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     [Header("Components")]
-    private EnemyMovement movement;
+    protected EnemyMovement movement;
 
     [Header("Health")]
-    [SerializeField] private int maxHealth;
-    private int health;
+    [SerializeField] protected int maxHealth;
+    protected int health;
 
     [Header("Elements")]
-    private Player player;
+    protected Player player;
+
 
     [Header("Spawn Sequence Related")]
-    [SerializeField] private SpriteRenderer renderer;
-    [SerializeField] private SpriteRenderer spawnIndicator;
-    [SerializeField] private Collider2D collider;
-    private bool hasSpawned = false;
+    [SerializeField] protected SpriteRenderer renderer;
+    [SerializeField] protected SpriteRenderer spawnIndicator;
+    [SerializeField] protected Collider2D collider;
+    protected bool hasSpawned = false;
 
     [Header("Effects")]
-    [SerializeField] private ParticleSystem passAwayParticles;
+    [SerializeField] protected ParticleSystem passAwayParticles;
 
     [Header("Attack")]
-    [SerializeField] private int damage;
-    [SerializeField] private float attackFrequency;
-    [SerializeField] private float playerDetectionRadius;
-    private float attackDelay;
-    private float attackTimer;
+    [SerializeField] protected float playerDetectionRadius;
 
     [Header("Actions")]
     public static Action<int, Vector2> onDamageTaken;
 
     [Header("DEBUG")]
-    [SerializeField] private bool gizmos;
+    [SerializeField] protected bool gizmos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         health = maxHealth;
-
-        movement = GetComponent<EnemyMovement>();   
+        movement = GetComponent<EnemyMovement>();
         player = FindFirstObjectByType<Player>();
 
         if (player == null)
@@ -53,29 +47,16 @@ public class Enemy : MonoBehaviour
         }
 
         StartSpawnSequence();
-        attackDelay = 1f / attackFrequency;
     }
 
     // Update is called once per frame
-    void Update()
+    protected bool CanAttack()
     {
-        if (!renderer.enabled) return;
-
-        if (attackTimer >= attackDelay)
-        {
-            TryAttack();
-        }
-        else
-        {
-            Wait();
-        }
-        if (hasSpawned) // Chỉ gọi FollowPlayer khi đã spawn
-        {
-            movement.FollowPlayer();
-        }
+        if (!renderer.enabled) return false;
+        return true;
     }
 
-    private void StartSpawnSequence()
+    protected virtual void StartSpawnSequence()
     {
         SetRendererVisibility(false);
 
@@ -86,7 +67,7 @@ public class Enemy : MonoBehaviour
             .setOnComplete(SpawnSequenceCompleted);
     }
 
-    private void SpawnSequenceCompleted()
+    protected virtual void SpawnSequenceCompleted()
     {
         SetRendererVisibility(true);
         hasSpawned = true;
@@ -96,33 +77,11 @@ public class Enemy : MonoBehaviour
         movement.StorePlayer(player);
     }
 
-    private void SetRendererVisibility(bool visibility)
+    protected virtual void SetRendererVisibility(bool visibility)
     {
         renderer.enabled = visibility;
         spawnIndicator.enabled = !visibility;
 
-    }
-
-    private void TryAttack()
-    {
-        float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
-
-
-        if (distanceToPlayer <= playerDetectionRadius)
-        {
-            Attack();
-        }
-    }
-
-    private void Wait()
-    {
-        attackTimer += Time.deltaTime;
-    }
-
-    private void Attack()
-    {
-        attackTimer = 0;
-        player.TakeDamage(damage);
     }
 
 
@@ -136,11 +95,11 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            PassAway(); 
+            PassAway();
         }
     }
 
-    private void PassAway()
+    protected virtual void PassAway()
     {
         //unparent the particles and play them
 
@@ -152,7 +111,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         if (!gizmos) return;
 
