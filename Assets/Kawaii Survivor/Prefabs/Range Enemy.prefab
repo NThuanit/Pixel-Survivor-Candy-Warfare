@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1406315555231665290}
+  - component: {fileID: 7697208750235841374}
   - component: {fileID: 2785139288769151471}
-  - component: {fileID: 279445294108560840}
   - component: {fileID: 9173076098715492053}
+  - component: {fileID: 279445294108560840}
   m_Layer: 6
   m_Name: Range Enemy
   m_TagString: Untagged
@@ -39,6 +40,26 @@ Transform:
   - {fileID: 4099736380917872635}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7697208750235841374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40768039559509746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cbe4e3f9a3bd6d4e94caf18b766fd3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movement: {fileID: 0}
+  maxHealth: 10
+  renderer: {fileID: 1482259982576260398}
+  spawnIndicator: {fileID: 6895696160045465487}
+  collider: {fileID: 279445294108560840}
+  passAwayParticles: {fileID: 7686966313001797990}
+  playerDetectionRadius: 3.46
+  gizmos: 1
 --- !u!114 &2785139288769151471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52,6 +73,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
+--- !u!114 &9173076098715492053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40768039559509746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d236136e632e92d449ccb3b086b4da2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootingPoint: {fileID: 4099736380917872635}
+  bulletPrefab: {fileID: 0}
+  damage: 1
+  attackFrequency: 1
 --- !u!58 &279445294108560840
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -88,22 +125,6 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.05, y: 0.45}
   m_Radius: 0.43
---- !u!114 &9173076098715492053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 40768039559509746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d236136e632e92d449ccb3b086b4da2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootingPoint: {fileID: 4099736380917872635}
-  bulletPrefab: {fileID: 0}
-  damage: 1
-  attackFrequency: 1
 --- !u!1 &2423978040686411853
 GameObject:
   m_ObjectHideFlags: 0

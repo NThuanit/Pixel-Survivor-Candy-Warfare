@@ -15,7 +15,7 @@ public class RangeEnemy : MonoBehaviour
     private int health;
 
     [Header("Elements")]
-    private Player player;
+    private Player player;  
 
     [Header("Spawn Sequence Related")]
     [SerializeField] private SpriteRenderer renderer;
@@ -43,7 +43,6 @@ public class RangeEnemy : MonoBehaviour
 
         movement = GetComponent<EnemyMovement>();
         attack = GetComponent<RangeEnemyAttack>();
-
         player = FindFirstObjectByType<Player>();
 
         attack.StorePlayer(player);
@@ -116,7 +115,7 @@ public class RangeEnemy : MonoBehaviour
 
 
         onDamageTaken?.Invoke(damage, transform.position);
-
+         
         if (health <= 0)
         {
             PassAway();
