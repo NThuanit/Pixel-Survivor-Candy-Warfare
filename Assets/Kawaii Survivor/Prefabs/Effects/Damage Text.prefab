@@ -172,7 +172,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 94
+  m_text: 154
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d390d9f9b5f2f443829efc5ac27eb11, type: 2}
   m_sharedMaterial: {fileID: -8367558247198366315, guid: 4d390d9f9b5f2f443829efc5ac27eb11, type: 2}
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 16777215
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3

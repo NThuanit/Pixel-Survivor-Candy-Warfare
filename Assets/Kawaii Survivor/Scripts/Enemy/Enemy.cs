@@ -27,7 +27,8 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float playerDetectionRadius;
 
     [Header("Actions")]
-    public static Action<int, Vector2> onDamageTaken;
+    public static Action<int, Vector2, bool> onDamageTaken;
+    public static Action<Vector2> onPassedAway;
 
     [Header("DEBUG")]
     [SerializeField] protected bool gizmos;
@@ -52,8 +53,7 @@ public abstract class Enemy : MonoBehaviour
     // Update is called once per frame
     protected bool CanAttack()
     {
-        if (!renderer.enabled) return false;
-        return true;
+        return renderer.enabled;
     }
 
     protected virtual void StartSpawnSequence()
@@ -85,13 +85,13 @@ public abstract class Enemy : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, bool isCriticalHit)  
     {
         int realDamage = Mathf.Min(health, damage);
         health -= realDamage;
 
 
-        onDamageTaken?.Invoke(damage, transform.position);
+        onDamageTaken?.Invoke(damage, transform.position, isCriticalHit);
 
         if (health <= 0)
         {
@@ -101,7 +101,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void PassAway()
     {
-        //unparent the particles and play them
+        onPassedAway?.Invoke(transform.position);
 
         passAwayParticles.transform.SetParent(null);
 

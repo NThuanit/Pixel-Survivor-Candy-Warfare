@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody2D), typeof(Collider2D))]
 public class EnemyBullet : MonoBehaviour
 {
     [Header("Elements")]
@@ -15,7 +16,7 @@ public class EnemyBullet : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
-        //LeanTween.delayedCall(gameObject, 5, () => rangeEnemyAttack.ReleaseBullet(this));
+        LeanTween.delayedCall(gameObject, 5, () => rangeEnemyAttack.ReleaseBullet(this));
     }
     
 
@@ -55,10 +56,9 @@ public class EnemyBullet : MonoBehaviour
         }
     }
 
-
     public void ReLoad()
     {
-        rig.velocity = Vector2.one;
+        rig.linearVelocity = Vector2.one;
         this.collider.enabled = true;
     }
 }
