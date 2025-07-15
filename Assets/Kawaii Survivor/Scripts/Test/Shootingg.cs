@@ -1,31 +1,32 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Pool;
 
 public class Shootingg : MonoBehaviour
 {
-    public ObjectPool bulletPool;
-    public Transform firePoint;
-    public float bulletSpeed = 20f;
+    [SerializeField] private Pooling pooling;
+    [SerializeField] private GameObject enemy;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("Shooting Settings")]
+    [SerializeField] private float fireRate = 0.5f; // thời gian giữa mỗi lần bắn (tính bằng giây)
+    private float fireTimer;
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        fireTimer += Time.deltaTime;
+
+        if (Input.GetKey(KeyCode.Space) && fireTimer >= fireRate)
         {
             Shoot();
+            fireTimer = 0f; // reset bộ đếm
         }
     }
 
-    public void Shoot()
+    private void Shoot()
     {
-        GameObject bullet = bulletPool.GetObject();
-        bullet.transform.position = firePoint.position;
-        Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-        rb.linearVelocity = firePoint.right * bulletSpeed;
+        Bullet2 bullet = pooling.GetBullet();
+        bullet.transform.position = transform.position;
+
+        bullet.transform.up = (enemy.transform.position - transform.position).normalized;
+        bullet.GetComponent<Rigidbody2D>().linearVelocity = bullet.transform.up * 5f;
     }
 }

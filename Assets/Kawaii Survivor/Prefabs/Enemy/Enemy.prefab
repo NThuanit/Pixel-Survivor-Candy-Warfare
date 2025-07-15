@@ -5219,15 +5219,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 10
-  healthText: {fileID: 3317739463476051833}
   renderer: {fileID: 4855291132650883720}
   spawnIndicator: {fileID: 2513552975682435859}
   collider: {fileID: -2949232839762584341}
   passAwayParticles: {fileID: 8279097215616685989}
-  damage: 1
-  attackFrequency: 1
   playerDetectionRadius: 0.5
   gizmos: 1
+  damage: 1
+  attackFrequency: 1
 --- !u!114 &5638274582853748157
 MonoBehaviour:
   m_ObjectHideFlags: 0
