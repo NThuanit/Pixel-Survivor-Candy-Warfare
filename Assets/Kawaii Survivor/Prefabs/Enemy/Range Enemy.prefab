@@ -52,7 +52,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbe4e3f9a3bd6d4e94caf18b766fd3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movement: {fileID: 0}
   maxHealth: 10
   renderer: {fileID: 1482259982576260398}
   spawnIndicator: {fileID: 6895696160045465487}
@@ -86,7 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootingPoint: {fileID: 4099736380917872635}
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 5366400159604457944, guid: b2a51ff3f07e98041bf56081ab7de4af, type: 3}
   damage: 1
   attackFrequency: 1
 --- !u!58 &279445294108560840

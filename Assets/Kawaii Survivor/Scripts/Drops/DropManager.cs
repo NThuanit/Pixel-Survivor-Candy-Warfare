@@ -58,9 +58,9 @@ public class DropManager : MonoBehaviour
 
     private void EnemyPassedAwayCallback(Vector2 enemyPosition)
     {
-        bool shouldSpawnCash = UnityEngine.Random.Range(0, 101) <= 20;
+        bool shouldSpawnCash = UnityEngine.Random.Range(0, 101) <= cashDropChance;
 
-        DroppableCurrency droppable = shouldSpawnCash  ? candyPool.Get() : cashPool.Get();
+        DroppableCurrency droppable = shouldSpawnCash  ? cashPool.Get() : candyPool.Get();
         droppable.transform.position = enemyPosition;
 
         TryDropChest(enemyPosition);
@@ -68,7 +68,7 @@ public class DropManager : MonoBehaviour
 
     private void TryDropChest(Vector2 spawnPosition)
     {
-        bool shouldSpawnChest = UnityEngine.Random.Range(0, 101) <= 20;
+        bool shouldSpawnChest = UnityEngine.Random.Range(0, 101) <= chestDropChance;
 
         if (!shouldSpawnChest) return;
         Instantiate(chestPrefab, spawnPosition, Quaternion.identity, transform);
