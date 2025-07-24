@@ -8,6 +8,7 @@ public class PlayerLevel : MonoBehaviour
     private int requireXp;
     private int currentXp;
     private int level;
+    private int levelsEarnedThisWave;
 
 
     [Header("Visuals")]
@@ -59,7 +60,18 @@ public class PlayerLevel : MonoBehaviour
     private void LevelUp()
     {
         level = level + 1;
+        levelsEarnedThisWave++;
         currentXp = 0;
         UpdateRequiredXp();
+    }
+
+    public bool HasLeveledUp()
+    {
+        if (levelsEarnedThisWave > 0)
+        {
+            levelsEarnedThisWave--;
+            return true;
+        }
+        else return false;  
     }
 }

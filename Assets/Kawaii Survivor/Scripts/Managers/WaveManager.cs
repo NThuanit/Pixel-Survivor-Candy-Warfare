@@ -5,7 +5,7 @@ using NaughtyAttributes;
 using UnityEditor.Experimental.GraphView;
 
 [RequireComponent(typeof(WaveManagerUI))]   
-public class WaveManager : MonoBehaviour
+public class WaveManager : MonoBehaviour, IGameStateListener
 {
     [Header("Elements")]
     [SerializeField] private Player player;
@@ -29,7 +29,7 @@ public class WaveManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartWave(0);
+
     }
 
     // Update is called once per frame
@@ -101,7 +101,16 @@ public class WaveManager : MonoBehaviour
         {
             waveMangerUI.UpdateTimerText("");
             waveMangerUI.UpdateWaveText("Stage Completed");
+            return;
         }
+        else
+        {
+            GameManager.instance.WaveCompletedCallback();
+        }
+    }
+
+    private void StartNextWave()
+    {
         StartWave(currentWaveIndex);
     }
 
@@ -120,6 +129,16 @@ public class WaveManager : MonoBehaviour
         targetPosition.y = Mathf.Clamp(targetPosition.y, -11, 11);
 
         return targetPosition;
+    }
+
+    public void GameStateChangedCallback(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.GAME:
+                StartNextWave();
+                break;
+        }
     }
 }
 
