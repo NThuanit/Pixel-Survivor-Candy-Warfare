@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +23,9 @@ public class GameManager : MonoBehaviour
         SetGameState(GameState.MENU);
     }
 
-    public void StartGame() => SetGameState(GameState.GAME);
-    public void StartShop() => SetGameState(GameState.SHOP);
+    public void StartGame()             => SetGameState(GameState.GAME);
+    public void StartWeaponSelection()  => SetGameState(GameState.WEAPONSELECTION);
+    public void StartShop()             => SetGameState(GameState.SHOP);
 
     // Update is called once per frame
     void Update()
@@ -39,6 +41,12 @@ public class GameManager : MonoBehaviour
         {
             gameStateListener.GameStateChangedCallback(gameState);  
         }
+
+    }
+
+    public void ManagerGameover()
+    {
+        SceneManager.LoadScene(0);
     }
 
     public void WaveCompletedCallback()

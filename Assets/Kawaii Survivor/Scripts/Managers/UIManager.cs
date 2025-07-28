@@ -1,18 +1,33 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour, IGameStateListener
 {
     [Header("Panels")]
     [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject weaponSelectionPanel;
     [SerializeField] private GameObject gamePanel;
+    [SerializeField] private GameObject gameoverPanel;
+    [SerializeField] private GameObject stageCompletePanel;
     [SerializeField] private GameObject waveTransitionPanel;
     [SerializeField] private GameObject shopPanel;
 
+    private List<GameObject> panels = new List<GameObject>();   
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        panels.AddRange(new GameObject[]
+        {
+            menuPanel,
+            weaponSelectionPanel,
+            gamePanel,
+            gameoverPanel,
+            stageCompletePanel,
+            waveTransitionPanel,
+            shopPanel
+        });
     }
 
     // Update is called once per frame
@@ -26,28 +41,40 @@ public class UIManager : MonoBehaviour, IGameStateListener
         switch (gameState)
         {
             case GameState.MENU:
-                menuPanel.SetActive(true);
-                gamePanel.SetActive(false);
-                waveTransitionPanel.SetActive(false);
-                shopPanel.SetActive(false);
+                ShowPanel(menuPanel);
+                break;
+
+            case GameState.WEAPONSELECTION:
+                ShowPanel(weaponSelectionPanel);
                 break;
 
             case GameState.GAME:
-                menuPanel.SetActive(false);
-                shopPanel.SetActive(false);
-                gamePanel.SetActive(true); 
+                ShowPanel(gamePanel);
+                break;
+
+            case GameState.GAMEOVER:
+                ShowPanel(gameoverPanel);
+                break;
+
+            case GameState.STAGECOMPLETE:
+                ShowPanel(stageCompletePanel);
                 break;
 
             case GameState.WAVETRANSITION:
-                gamePanel.SetActive(false);
-                waveTransitionPanel.SetActive(true);
+                ShowPanel(waveTransitionPanel);
                 break;
 
             case GameState.SHOP:
-                gamePanel.SetActive(false);
-                waveTransitionPanel.SetActive(false);
-                shopPanel.SetActive(true);
+                ShowPanel(shopPanel);
                 break;
+        }
+    }
+
+    private void ShowPanel(GameObject panel)
+    {
+        foreach (GameObject p in panels)
+        {
+            p.SetActive(p == panel);
         }
     }
 }
