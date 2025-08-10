@@ -38,7 +38,7 @@ public static class Enums
 
         formated += unformatedString[0];
 
-        for (int i = 0; i < unformatedString.Length; i++)
+        for (int i = 1; i < unformatedString.Length; i++)
         {
             if (char.IsUpper(unformatedString[i]))
                 formated += " ";

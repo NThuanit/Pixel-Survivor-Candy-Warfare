@@ -3,10 +3,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
 {
     [Header("Settings")]
-    [SerializeField] private int maxHealth;
+    [SerializeField] private int baseMaxHealth;
+    private int maxHealth;
     private int health;
 
     [Header("Elements")]
@@ -51,5 +52,14 @@ public class PlayerHealth : MonoBehaviour
 
         healthText.text = health + " / " + maxHealth;
     }
-    
+
+    public void UpdateStats(PlayerStatsManager playerStatsManager)
+    {
+        float addedHealth = playerStatsManager.GetStatValue(Stat.MaxHealth);
+        maxHealth = baseMaxHealth + (int)addedHealth;
+        maxHealth = Mathf.Max(1, maxHealth);
+
+        health = maxHealth;
+        UpdateUI();
+    }
 }
