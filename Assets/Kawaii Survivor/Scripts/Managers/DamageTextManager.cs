@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Pool;
 public class DamageTextManager : MonoBehaviour
 {
@@ -10,13 +11,16 @@ public class DamageTextManager : MonoBehaviour
 
     private void Awake()
     {
-        MeleeEnemy.onDamageTaken += EnemyHitCallBack;
+        MeleeEnemy.onDamageTaken += EnemyHitCallback;
+        PlayerHealth.onAttackDodged += AttackDodgeCallback;
     }
 
     private void OnDestroy()
     {
-        MeleeEnemy.onDamageTaken -= EnemyHitCallBack;
+        MeleeEnemy.onDamageTaken -= EnemyHitCallback;
+        PlayerHealth.onAttackDodged -= AttackDodgeCallback;
     }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -51,14 +55,26 @@ public class DamageTextManager : MonoBehaviour
         
     }
 
-    private void EnemyHitCallBack(int damage, Vector2 enemyPos, bool isCriticalHit)
+    private void EnemyHitCallback(int damage, Vector2 enemyPos, bool isCriticalHit)
     {
         DamageText damageTextInstantiate = damageTextPool.Get();
 
         Vector3 spawnPosition = enemyPos + Vector2.up * 1.5f;
         damageTextInstantiate.transform.position = spawnPosition;
 
-        damageTextInstantiate.Animate(damage, isCriticalHit);
+        damageTextInstantiate.Animate(damage.ToString(), isCriticalHit);
+
+        LeanTween.delayedCall(1, () => damageTextPool.Release(damageTextInstantiate));
+    }
+
+    private void AttackDodgeCallback(Vector2 playerPosition)
+    {
+        DamageText damageTextInstantiate = damageTextPool.Get();
+
+        Vector3 spawnPosition = playerPosition + Vector2.up * 1.5f;
+        damageTextInstantiate.transform.position = spawnPosition;
+
+        damageTextInstantiate.Animate("Dodge", false);
 
         LeanTween.delayedCall(1, () => damageTextPool.Release(damageTextInstantiate));
     }

@@ -95,7 +95,6 @@ public class MeleeWeapon : Weapon
         damagedEnemies.Clear();
     }
 
-
     private void Attack()
     {
         //Collider2D[] enemies = Physics2D.OverlapCircleAll(hitDetectionTransform.position, hitDetectionRadius, enemyMask);
@@ -120,5 +119,16 @@ public class MeleeWeapon : Weapon
             }
 
         }
+    }
+
+    public override void UpdateStats(PlayerStatsManager playerStatsManager)
+    {
+        ConfiguresStats();
+
+        damage = Mathf.RoundToInt(damage * (1 + playerStatsManager.GetStatValue(Stat.Attack) / 100));
+        attackDelay /= 1 + (playerStatsManager.GetStatValue(Stat.AttackSpeed) / 100);
+
+        criticalChance = Mathf.RoundToInt(criticalChance * (1 + playerStatsManager.GetStatValue(Stat.CriticalChance) / 100));
+        criticalPersent += playerStatsManager.GetStatValue(Stat.CriticalPercent);
     }
 }

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        SetGameState(GameState.MENU);
         if (instance == null)
             instance = this;
         else 
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        SetGameState(GameState.MENU);
+        //SetGameState(GameState.MENU);
     }
 
     public void StartGame()             => SetGameState(GameState.GAME);

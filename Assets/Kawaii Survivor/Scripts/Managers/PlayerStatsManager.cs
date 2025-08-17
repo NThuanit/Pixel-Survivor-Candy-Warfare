@@ -18,7 +18,7 @@ public class PlayerStatsManager : MonoBehaviour
         playerStats = playerData.BaseStats;
         foreach (KeyValuePair<Stat, float> kvp in playerStats)
         {
-            addends.Add(kvp.Key, 0);
+            addends.Add(kvp.Key, kvp.Value);
         }
     }
 

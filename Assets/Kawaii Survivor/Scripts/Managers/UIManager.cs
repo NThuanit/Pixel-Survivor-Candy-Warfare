@@ -74,6 +74,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
     {
         foreach (GameObject p in panels)
         {
+            //Debug.Log(p == panel);
             p.SetActive(p == panel);
         }
     }
