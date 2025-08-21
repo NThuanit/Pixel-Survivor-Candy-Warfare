@@ -22,36 +22,19 @@ public class PlayerStatsManager : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        UpdatePlayerStats();    
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Start() => UpdatePlayerStats();    
 
     public void AddPlayerStat(Stat stat, float value)
     {
         if (addends.ContainsKey(stat))
-        {
             addends[stat] += value;
-        }
         else
             Debug.Log($"The Key {stat} has not been found, this is normal !!!");
 
         UpdatePlayerStats();
     }
 
-    public float GetStatValue(Stat stat)
-    {
-        float value = playerStats[stat]  + addends[stat];
-
-        return addends[stat];
-    }
+    public float GetStatValue(Stat stat)    => playerStats[stat] + addends[stat];
     private void UpdatePlayerStats()
     {
         // Tìm tất cả các object implement IPlayerStatsDependency

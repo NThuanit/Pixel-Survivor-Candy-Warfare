@@ -99,17 +99,21 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    protected virtual void PassAway()
+    public void PassAway()
     {
         onPassedAway?.Invoke(transform.position);
 
+        PassAwayAfterWave();
+    }
+
+    public void PassAwayAfterWave()
+    {
         passAwayParticles.transform.SetParent(null);
 
         passAwayParticles.Play();
 
         Destroy(gameObject);
     }
-
 
     protected virtual void OnDrawGizmosSelected()
     {
