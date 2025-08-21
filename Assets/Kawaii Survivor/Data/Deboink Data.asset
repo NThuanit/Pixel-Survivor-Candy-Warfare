@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a929b5720f8f9934693417f752ed9e3b, type: 3}
-  m_Name: Weapon Data Gun Data
+  m_Name: Deboink Data
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: Weapon Data Gun
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 84f07b27a38eda042b5858622cbeaf52, type: 3}
+  <Name>k__BackingField: Deboink
+  <Sprite>k__BackingField: {fileID: 5485319108022510092, guid: 15c981701acaf3f4b840cf2f1f7d3446, type: 3}
   <PurchasePrice>k__BackingField: 100
-  <Prefab>k__BackingField: {fileID: 1159321382019696758, guid: a3a360d51c0672448934dc6de1dae68b, type: 3}
+  <Prefab>k__BackingField: {fileID: 4303005365806699437, guid: 266e70d035d09884f84e3d55752f97a4, type: 3}
   attack: 10
   attackSpeed: 2
   criticalChance: 5

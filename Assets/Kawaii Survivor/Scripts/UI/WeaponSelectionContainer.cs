@@ -1,16 +1,53 @@
 using UnityEngine;
-
+using UnityEngine.UI;
+using TMPro;
+using System.Collections.Generic;
 public class WeaponSelectionContainer : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [Header("Elements")]
+    [SerializeField] private Image icon;
+    [SerializeField] private TextMeshProUGUI nameText;
+
+    [Header("Stats")]
+    [SerializeField] private Transform statContainersParent;
+
+    [field: SerializeField] public Button Button { get; private set; }
+
+    [Header("Color")]
+    [SerializeField] private Image[] levelDependentImages;
+
+   
+    public void Configure(Sprite sprite, string name, int level, WeaponDataSO weaponData)
     {
-        
+        icon.sprite = sprite;
+        nameText.text = name + " (lvl " + (level + 1) + ")";
+
+        Color imageColor = ColorHolder.GetColor(level);
+        //Debug.Log(imageColor);
+        nameText.color = imageColor;
+
+        foreach (Image image in levelDependentImages)
+            image.color = imageColor;
+
+        Dictionary<Stat, float> calculatedStats = WeaponStatsCalculator.GetStats(weaponData, level);
+        ConfigureStatContainers(calculatedStats);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ConfigureStatContainers(Dictionary<Stat, float> calculatedStats)
     {
-        
+        StatContainerManager.instance.GenerateStatContainers(calculatedStats, statContainersParent);
+    }
+
+    public void Select()
+    {
+        LeanTween.cancel(gameObject);
+        LeanTween.scale(gameObject, Vector3.one * 1.075f, 0.3f).setEase(LeanTweenType.easeOutSine);
+    }
+
+    public void Deselect()
+    {
+        LeanTween.cancel(gameObject);
+        LeanTween.scale(gameObject, Vector3.one, 0.3f);
     }
 }
+

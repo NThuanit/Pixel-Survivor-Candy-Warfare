@@ -97,7 +97,5 @@ public class RangeWeapon : Weapon
         criticalPersent += playerStatsManager.GetStatValue(Stat.CriticalPercent);
 
         range += playerStatsManager.GetStatValue(Stat.Range) / 10;
-
     }
-      
 }

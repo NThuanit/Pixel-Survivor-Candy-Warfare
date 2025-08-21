@@ -13,10 +13,9 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [SerializeField] private GameObject waveTransitionPanel;
     [SerializeField] private GameObject shopPanel;
 
-    private List<GameObject> panels = new List<GameObject>();   
+    private List<GameObject> panels = new List<GameObject>();
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
         panels.AddRange(new GameObject[]
         {
@@ -28,6 +27,12 @@ public class UIManager : MonoBehaviour, IGameStateListener
             waveTransitionPanel,
             shopPanel
         });
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame

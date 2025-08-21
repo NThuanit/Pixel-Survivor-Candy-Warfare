@@ -26,19 +26,6 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     [Header("Level")]
     [field: SerializeField] public int Level { get; private set; }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-
-    }
     
     protected Enemy GetClosestEnemy()
     {
@@ -92,14 +79,18 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     protected void ConfiguresStats()
     {
-        float multiplier = 1 + (float)Level / 3;
-        damage = Mathf.RoundToInt(WeaponData.GetStatValue(Stat.Attack) * multiplier);
-        attackDelay = 1f / (WeaponData.GetStatValue(Stat.AttackSpeed) * multiplier);
+        Dictionary<Stat, float> calculatedStats = WeaponStatsCalculator.GetStats(WeaponData, Level);
 
-        criticalChance = Mathf.RoundToInt(WeaponData.GetStatValue(Stat.CriticalChance) * multiplier);
-        criticalPersent = (WeaponData.GetStatValue(Stat.CriticalPercent) * multiplier);
+        damage              =   Mathf.RoundToInt(calculatedStats[Stat.Attack]);
+        attackDelay         =   1f / (calculatedStats[Stat.AttackSpeed]);
+        criticalChance      =   Mathf.RoundToInt(calculatedStats[Stat.CriticalChance]);
+        criticalPersent     =   calculatedStats[Stat.CriticalPercent];
+        range               =   calculatedStats[Stat.Range];
+    }
 
-        if (WeaponData.Prefab.GetType() == typeof(RangeWeapon))
-            range = WeaponData.GetStatValue(Stat.Range) * multiplier;
+    public void UpgradeTo(int targetLevel)
+    {
+        Level = targetLevel;
+        ConfiguresStats();
     }
 }
