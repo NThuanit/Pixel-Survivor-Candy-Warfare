@@ -10,7 +10,7 @@ public class PlayerStatsManager : MonoBehaviour
     [Header("Settings")]
     private Dictionary<Stat, float> playerStats = new Dictionary<Stat, float>();
     private Dictionary<Stat, float> addends = new Dictionary<Stat, float>();
-    //private Dictionary<Stat, StatData> addends = new Dictionary<Stat, StatData>();   
+    private Dictionary<Stat, float> objectAddeds = new Dictionary<Stat, float>();
 
 
     private void Awake()
@@ -18,7 +18,8 @@ public class PlayerStatsManager : MonoBehaviour
         playerStats = playerData.BaseStats;
         foreach (KeyValuePair<Stat, float> kvp in playerStats)
         {
-            addends.Add(kvp.Key, kvp.Value);
+            addends.Add(kvp.Key, 0);
+            objectAddeds.Add(kvp.Key, 0);
         }
     }
 
@@ -34,7 +35,15 @@ public class PlayerStatsManager : MonoBehaviour
         UpdatePlayerStats();
     }
 
-    public float GetStatValue(Stat stat)    => playerStats[stat] + addends[stat];
+    public void AddObject(Dictionary<Stat, float> objectStats)
+    {
+        foreach (KeyValuePair <Stat, float> kvp in objectStats)
+            objectAddeds[kvp.Key] += kvp.Value;
+
+        UpdatePlayerStats();
+    }
+
+    public float GetStatValue(Stat stat)    => playerStats[stat] + addends[stat] + objectAddeds[stat];
     private void UpdatePlayerStats()
     {
         // Tìm tất cả các object implement IPlayerStatsDependency

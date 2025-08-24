@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8d344db61be08c4bba0aebd0f779696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WeaponData>k__BackingField: {fileID: 0}
+  <WeaponData>k__BackingField: {fileID: 11400000, guid: 8248a5f7a6d3e6c44b9afa7a38821ff0, type: 2}
   range: 3
   enemyMask:
     serializedVersion: 2
