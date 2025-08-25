@@ -25,4 +25,10 @@ public class PlayerObjects : MonoBehaviour
     {
         
     }
+
+    public void AddObject(ObjectDataSO objectData)
+    {
+        Objects.Add(objectData);
+        playerStatsManager.AddObject(objectData.BaseStats);
+    }
 }

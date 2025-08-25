@@ -10,9 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f752fe1946eada488842ca7beccc08d, type: 3}
-  m_Name: Heart
+  m_Name: Shield
   m_EditorClassIdentifier: 
-  <Name>k__BackingField: 
-  <Icon>k__BackingField: {fileID: 0}
-  <Price>k__BackingField: 0
-  <Rarity>k__BackingField: 0
+  <Name>k__BackingField: Shield
+  <Icon>k__BackingField: {fileID: -2757887451555568444, guid: 8fffe40f3ebda0d469b31ca1513a3248, type: 3}
+  <Price>k__BackingField: 100
+  <Rarity>k__BackingField: 1
+  statDatas:
+  - stat: 4
+    value: -2
+  - stat: 5
+    value: 5
+  - stat: 8
+    value: 10

@@ -6,21 +6,49 @@ using NaughtyAttributes;
 using UnityEngine.SceneManagement;
 public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 {
+    public static WaveTransitionManager instance;
+
+    [Header("Player")]
+    [SerializeField] private PlayerObjects playerObjects;
+
     [Header("Elements")]
     [SerializeField] private PlayerStatsManager playerStatsManager;
+    [SerializeField] private GameObject upgradeContainersParent;
     [SerializeField] private UpgradeContainer[] upgradeContainers;
- 
+
+    [Header("Chest Related Stuff")]
+    [SerializeField] private ChestObjectContainer chestContainerPrefab;
+    [SerializeField] private Transform chestContainerParent;
+
+    [Header("Settings")]
+    private int chestCollected;
+
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(gameObject);
+
+        Chest.onCollected += ChestCollectedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        Chest.onCollected -= ChestCollectedCallback;
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void GameStateChangedCallback(GameState gameState)
@@ -28,22 +56,61 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
         switch (gameState)
         {
             case GameState.WAVETRANSITION:
-                ConfigureUpgradeContainers();
+                TryOpenChest();
                 break;
         }
     }
 
+    private void TryOpenChest()
+    {
+        chestContainerParent.Clear();
+        if (chestCollected > 0)
+            ShowObject();
+        else
+            ConfigureUpgradeContainers();
+    }
+
+    private void ShowObject()
+    {
+        chestCollected--;
+
+        upgradeContainersParent.SetActive(false);
+
+        ObjectDataSO[] objectData = ResourcesManager.Objects;
+        ObjectDataSO randomObjectData = objectData[UnityEngine.Random.Range(0, objectData.Length)];
+
+        ChestObjectContainer containerInstance = Instantiate(chestContainerPrefab, chestContainerParent);
+        containerInstance.Configure(randomObjectData);
+
+        containerInstance.TakeButton.onClick.AddListener(() => TakeButtonCallback(randomObjectData));
+        containerInstance.RecycleButton.onClick.AddListener(() => RecycleButtonCallback(randomObjectData));
+    }
+
+    private void TakeButtonCallback(ObjectDataSO objectToTake)
+    {
+        //Debug.Log(objectToTake.Name);
+        playerObjects.AddObject(objectToTake);
+        TryOpenChest();
+    }
+
+    private void RecycleButtonCallback(ObjectDataSO objectToRecycle)
+    {
+        CurrencyManager.instance.AddCurrency(objectToRecycle.RecyclePrice);
+        TryOpenChest();
+    }
 
     [Button]
     private void ConfigureUpgradeContainers()
     {
+        upgradeContainersParent.SetActive(true);
+
         for (int i = 0; i < upgradeContainers.Length; i++)
         {
             int randomIndex = UnityEngine.Random.Range(0, Enum.GetValues(typeof(Stat)).Length);
 
-            Stat stat = (Stat)Enum.GetValues(typeof (Stat)).GetValue(randomIndex);
+            Stat stat = (Stat)Enum.GetValues(typeof(Stat)).GetValue(randomIndex);
 
-            string randomStatString = Enums.FormatStatName(stat);  
+            string randomStatString = Enums.FormatStatName(stat);
 
             string buttonString;
             Action action = GetActionToPerform(stat, out buttonString);
@@ -144,10 +211,20 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
                 break;
 
             default:
-                
+
                 return () => Debug.Log("Invalid stat");
         }
 
         return () => playerStatsManager.AddPlayerStat(stat, value);
+    }
+
+    private void ChestCollectedCallback()
+    {
+        chestCollected++;
+    }
+
+    public bool HasCollectedChest()
+    {
+        return chestCollected > 0;
     }
 }
