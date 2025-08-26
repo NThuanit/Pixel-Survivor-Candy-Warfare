@@ -48,7 +48,7 @@ public class PlayerStatsManager : MonoBehaviour
     {
         // Tìm tất cả các object implement IPlayerStatsDependency
         IEnumerable<IPlayerStatsDependency> playerStatsDependencies =
-            FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+            FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
             .OfType<IPlayerStatsDependency>();
 
         // Thông báo cho tất cả observers
