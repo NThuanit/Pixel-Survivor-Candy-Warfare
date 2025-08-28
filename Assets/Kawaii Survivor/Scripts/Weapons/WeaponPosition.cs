@@ -11,7 +11,7 @@ public class WeaponPosition : MonoBehaviour
     {
         Weapon = Instantiate(weapon, transform);
 
-        Weapon.transform.localPosition = Vector3.one;
+        Weapon.transform.localPosition = Vector3.zero;
         Weapon.transform.localRotation = Quaternion.identity;
         
         Weapon.UpgradeTo(weaponLevel);
