@@ -1,8 +1,11 @@
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
 public class ShopManager : MonoBehaviour, IGameStateListener
 {
     [Header("Elements")]
@@ -17,6 +20,9 @@ public class ShopManager : MonoBehaviour, IGameStateListener
     [SerializeField] private Button rerollButton;
     [SerializeField] private int rerollPrice;
     [SerializeField] private TextMeshProUGUI rerollPriceText;
+
+    [Header("Actions")]
+    public static Action onItemPurchased;
 
     private void Awake()
     {
@@ -115,6 +121,8 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
             Destroy(container.gameObject);
         }
+
+        onItemPurchased?.Invoke();
     }
 
     private void PurchaseObject(ShopItemContainer container)
@@ -124,5 +132,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
         CurrencyManager.instance.UseCurrency(container.ObjectData.Price);
 
         Destroy(container.gameObject);
+
+        onItemPurchased?.Invoke();
     }
 }

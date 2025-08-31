@@ -13,6 +13,16 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
     [SerializeField] private ShopManagerUI shopManagerUI;
     [SerializeField] private InventoryItemInfo itemInfo;
 
+    private void Awake()
+    {
+        ShopManager.onItemPurchased += ItemPurchasedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        ShopManager.onItemPurchased -= ItemPurchasedCallback;
+    }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,6 +82,24 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
     private void ShowObjectInfo(ObjectDataSO objectData)
     {
         itemInfo.Configure(objectData);
+
+        itemInfo.RecycleButton.onClick.AddListener(() => RecycleObject(objectData));
+
         shopManagerUI.ShowItemInfo();
     }
+
+    private void RecycleObject(ObjectDataSO objectToRecycle)
+    {
+        //Remove the Object from PlayerObjects
+        playerObjects.RecycleObject(objectToRecycle);
+
+
+        //Destroy the inventory item container
+        Configure();
+
+        //Close the item info
+        shopManagerUI.HideItemInfo();
+    }
+
+    private void ItemPurchasedCallback() => Configure();    
 }

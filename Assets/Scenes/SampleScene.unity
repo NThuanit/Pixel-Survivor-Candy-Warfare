@@ -6930,10 +6930,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Objects>k__BackingField:
+  - {fileID: 11400000, guid: 04161b86e1805f04b877e6683d6b5d38, type: 2}
   - {fileID: 11400000, guid: 282e39c3bed7baf408eea44397302f27, type: 2}
   - {fileID: 11400000, guid: d5b1c58ef1cbec945b7beb5319b1ba97, type: 2}
   - {fileID: 11400000, guid: 3b09578af073a2843aab943dd9954e03, type: 2}
-  - {fileID: 11400000, guid: 04161b86e1805f04b877e6683d6b5d38, type: 2}
 --- !u!1 &798562876
 GameObject:
   m_ObjectHideFlags: 0
@@ -7752,6 +7752,7 @@ GameObject:
   - component: {fileID: 950912080}
   - component: {fileID: 950912082}
   - component: {fileID: 950912081}
+  - component: {fileID: 950912083}
   m_Layer: 5
   m_Name: Item Info  Slide  Panel
   m_TagString: Untagged
@@ -7818,6 +7819,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950912079}
   m_CullTransparentMesh: 1
+--- !u!114 &950912083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950912079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c38fe3cc7aff8d7428e10eb982e874a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 7040770055411944001}
+  itemNameText: {fileID: 305516867039362489}
+  recyclePriceText: {fileID: 108960855}
+  container: {fileID: 950912081}
+  statsParent: {fileID: 3924222308835874438}
 --- !u!1 &956641392
 GameObject:
   m_ObjectHideFlags: 0
@@ -15815,6 +15833,8 @@ MonoBehaviour:
   playerObjects: {fileID: 795707036}
   inventoryItemsParent: {fileID: 99223286}
   inventoryItemContainer: {fileID: 3515325226941345587, guid: 87bea4a7f79c2c14b9e5f12260cd1980, type: 3}
+  shopManagerUI: {fileID: 2061455530}
+  itemInfo: {fileID: 950912083}
 --- !u!1 &1645321259
 GameObject:
   m_ObjectHideFlags: 0
@@ -16548,50 +16568,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1705440776}
   m_CullTransparentMesh: 1
---- !u!1 &1722232316
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1722232318}
-  - component: {fileID: 1722232317}
-  m_Layer: 0
-  m_Name: ~LeanTween
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!114 &1722232317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722232316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2f4b27196f84954b44753aaac214bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1722232318
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722232316}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1731515871
 GameObject:
   m_ObjectHideFlags: 0
@@ -20450,7 +20426,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8341490338261974712}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2061455530}
+        m_TargetAssemblyTypeName: ShopManagerUI, Assembly-CSharp
+        m_MethodName: HideItemInfo
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1765108254204895117
 GameObject:
   m_ObjectHideFlags: 0
@@ -22831,4 +22819,3 @@ SceneRoots:
   - {fileID: 1087379723}
   - {fileID: 1043214504}
   - {fileID: 2109860698}
-  - {fileID: 1722232318}
