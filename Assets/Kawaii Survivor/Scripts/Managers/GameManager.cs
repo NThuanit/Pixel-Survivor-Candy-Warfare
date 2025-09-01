@@ -3,10 +3,14 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-
+using System;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
+    [Header("Actions")]
+    public static Action onGamePaused;
+    public static Action onGameResumed;
 
     private void Awake()
     {
@@ -63,7 +67,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-  
+    public void PauseButtonCallback()
+    {
+        Time.timeScale = 0;
+        onGamePaused?.Invoke();
+    }
+
+    public void ResumeButtonCallback()
+    {
+        Time.timeScale = 1;
+        onGameResumed?.Invoke();
+    }
+
+    public void RestartFromPause()
+    {
+        Time.timeScale = 1;
+        ManagerGameover();
+    }
 }
 
 public interface IGameStateListener

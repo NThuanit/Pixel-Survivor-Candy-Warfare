@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [SerializeField] private GameObject stageCompletePanel;
     [SerializeField] private GameObject waveTransitionPanel;
     [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject restartConfirmationPanel;
 
     private List<GameObject> panels = new List<GameObject>();
 
@@ -27,19 +29,21 @@ public class UIManager : MonoBehaviour, IGameStateListener
             waveTransitionPanel,
             shopPanel
         });
+
+
+        GameManager.onGamePaused += GamePausedCallback;
+        GameManager.onGameResumed += GameResumedCallback;
+
+        pausePanel.SetActive(false);
+        HideRestartConfirmationPanel();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void OnDestroy()
     {
-        
+        GameManager.onGamePaused -= GamePausedCallback;
+        GameManager.onGameResumed -= GameResumedCallback;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void GameStateChangedCallback(GameState gameState)
     {
@@ -82,5 +86,25 @@ public class UIManager : MonoBehaviour, IGameStateListener
             //Debug.Log(p == panel);
             p.SetActive(p == panel);
         }
+    }
+
+    private void GamePausedCallback()
+    {
+        pausePanel.SetActive(true); 
+    }
+
+    private void GameResumedCallback()
+    {
+        pausePanel.SetActive(false);
+    }
+
+    public void ShowRestartConfirmationPanel()
+    {
+        restartConfirmationPanel.SetActive(true);
+    }
+
+    public void HideRestartConfirmationPanel()
+    {
+        restartConfirmationPanel.SetActive(false);
     }
 }
