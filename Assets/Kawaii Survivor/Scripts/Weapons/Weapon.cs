@@ -93,4 +93,11 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         Level = targetLevel;
         ConfiguresStats();
     }
+
+    public int GetRecyclePrice()
+    {
+        return WeaponStatsCalculator.GetRecyclePrice(WeaponData, Level);
+    }
+
+    public void Upgrade() => UpgradeTo(Level + 1);
 }

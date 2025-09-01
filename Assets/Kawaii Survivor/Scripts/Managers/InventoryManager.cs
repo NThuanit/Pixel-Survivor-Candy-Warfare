@@ -16,11 +16,14 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
     private void Awake()
     {
         ShopManager.onItemPurchased += ItemPurchasedCallback;
+        WeaponMerger.onMerge += WeaponMergedCallback;
     }
 
     private void OnDestroy()
     {
         ShopManager.onItemPurchased -= ItemPurchasedCallback;
+        WeaponMerger.onMerge -= WeaponMergedCallback;
+
     }
 
 
@@ -49,9 +52,13 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         Weapon[] weapons = playerWeapons.GetWeapons();
         for (int i = 0; i < weapons.Length; i++)
         {
+            if (weapons[i] == null)
+                continue;
+
+
             InventoryItemContainer container = Instantiate(inventoryItemContainer, inventoryItemsParent);
 
-            container.Configure(weapons[i], () => ShowItemInfo(container));
+            container.Configure(weapons[i], i, () => ShowItemInfo(container));
         }
 
         //Player Weapons / Player Objects
@@ -68,21 +75,35 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
     private void ShowItemInfo(InventoryItemContainer container)
     {
         if (container.Weapon != null)
-            ShowWeaponInfo(container.Weapon);   
+            ShowWeaponInfo(container.Weapon, container.Index);   
         else 
             ShowObjectInfo(container.ObjectData);
     }
 
-    private void ShowWeaponInfo(Weapon weapon)
+    private void ShowWeaponInfo(Weapon weapon, int index)
     {
         itemInfo.Configure(weapon);
+
+        itemInfo.RecycleButton.onClick.RemoveAllListeners();
+        itemInfo.RecycleButton.onClick.AddListener(() => RecycleWeapon(index));
+
         shopManagerUI.ShowItemInfo();
+    }
+
+    private void RecycleWeapon(int index)
+    {
+        playerWeapons.RecycleWeapon(index);
+
+        Configure();
+
+        shopManagerUI.HideItemInfo();   
     }
 
     private void ShowObjectInfo(ObjectDataSO objectData)
     {
         itemInfo.Configure(objectData);
 
+        itemInfo.RecycleButton.onClick.RemoveAllListeners();
         itemInfo.RecycleButton.onClick.AddListener(() => RecycleObject(objectData));
 
         shopManagerUI.ShowItemInfo();
@@ -102,4 +123,10 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
     }
 
     private void ItemPurchasedCallback() => Configure();    
+
+    private void WeaponMergedCallback(Weapon mergedWeapon)
+    {
+        Configure();
+        itemInfo.Configure(mergedWeapon);
+    }
 }

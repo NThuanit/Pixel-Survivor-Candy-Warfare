@@ -7836,6 +7836,8 @@ MonoBehaviour:
   recyclePriceText: {fileID: 108960855}
   container: {fileID: 950912081}
   statsParent: {fileID: 3924222308835874438}
+  <RecycleButton>k__BackingField: {fileID: 1705440778}
+  mergeButton: {fileID: 59407787}
 --- !u!1 &956641392
 GameObject:
   m_ObjectHideFlags: 0

@@ -29,6 +29,11 @@ public class InventoryItemInfo : MonoBehaviour
             weapon.WeaponData.BaseStats);
 
         mergeButton.gameObject.SetActive(true); 
+
+        mergeButton.interactable = WeaponMerger.instance.CanMerge(weapon);
+
+        mergeButton.onClick.RemoveAllListeners();
+        mergeButton.onClick.AddListener(WeaponMerger.instance.Merge);
     }
 
     public void Configure(ObjectDataSO objectData)
