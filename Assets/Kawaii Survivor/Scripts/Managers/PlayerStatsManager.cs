@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using System.Linq;
+using System;
 public class PlayerStatsManager : MonoBehaviour
 {
     [Header("Data")]
@@ -15,13 +16,22 @@ public class PlayerStatsManager : MonoBehaviour
 
     private void Awake()
     {
+        CharacterSelectionManager.onCharacterSelected += CharacterSelectedCallback;
+
         playerStats = playerData.BaseStats;
+
         foreach (KeyValuePair<Stat, float> kvp in playerStats)
         {
             addends.Add(kvp.Key, 0);
             objectAddeds.Add(kvp.Key, 0);
         }
     }
+
+    private void OnDestroy()
+    {
+        CharacterSelectionManager.onCharacterSelected -= CharacterSelectedCallback;
+    }
+
 
     void Start() => UpdatePlayerStats();    
 
@@ -62,6 +72,14 @@ public class PlayerStatsManager : MonoBehaviour
         // Thông báo cho tất cả observers
         foreach (IPlayerStatsDependency dependency in playerStatsDependencies)
             dependency.UpdateStats(this);
+    }
+
+
+    private void CharacterSelectedCallback(CharacterDataSO characterData)
+    {
+        playerData = characterData;
+        playerStats = playerData.BaseStats;
+        UpdatePlayerStats();
     }
 }
 

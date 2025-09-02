@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerHealth), typeof(PlayerLevel))]
@@ -7,6 +8,7 @@ public class Player : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] private CircleCollider2D collider;
+    [SerializeField] private SpriteRenderer playerRenderer;
     private PlayerHealth playerHealth;
     private PlayerLevel playerLevel;
     private void Awake()
@@ -17,7 +19,19 @@ public class Player : MonoBehaviour
             Destroy(gameObject);  
 
         playerHealth = GetComponent<PlayerHealth>();
-        playerLevel = GetComponent<PlayerLevel>();    
+        playerLevel = GetComponent<PlayerLevel>();
+
+        CharacterSelectionManager.onCharacterSelected += CharacterSelectedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        CharacterSelectionManager.onCharacterSelected -= CharacterSelectedCallback;
+    }
+
+    private void CharacterSelectedCallback(CharacterDataSO characterData)
+    {
+        playerRenderer.sprite = characterData.Sprite;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
