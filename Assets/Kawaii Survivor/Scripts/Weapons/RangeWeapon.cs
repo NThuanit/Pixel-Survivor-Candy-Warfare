@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Pool;
 public class RangeWeapon : Weapon
@@ -8,6 +9,9 @@ public class RangeWeapon : Weapon
 
     [Header("Pooling")]
     private ObjectPool<Bullet> bulletPool;
+
+    [Header("Actions")]
+    public static Action onBulletShot;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -84,6 +88,10 @@ public class RangeWeapon : Weapon
 
         Bullet bulletInstance = bulletPool.Get();
         bulletInstance.Shoot(damage, transform.up, isCriticalHit);
+
+        onBulletShot?.Invoke();
+
+        PlayeAttackSound();
     }
 
     public override void UpdateStats(PlayerStatsManager playerStatsManager)

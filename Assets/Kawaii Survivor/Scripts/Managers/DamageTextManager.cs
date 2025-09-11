@@ -40,7 +40,8 @@ public class DamageTextManager : MonoBehaviour
 
     private void ActionOnRelease(DamageText damageText)
     {
-        damageText.gameObject.SetActive(false);
+        if (damageText != null)
+            damageText.gameObject.SetActive(false);
     }
 
     private void ActionOnDestroy(DamageText damageText)
