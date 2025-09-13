@@ -27,8 +27,13 @@ public abstract class Enemy : MonoBehaviour
     [SerializeField] protected float playerDetectionRadius;
 
     [Header("Actions")]
+    //action - position -  isCritical
     public static Action<int, Vector2, bool> onDamageTaken;
+
+    //Position
     public static Action<Vector2> onPassedAway;
+    public static Action<Vector2> onBossPassedAway;
+    protected Action onSpawnSequenceCompleted;
 
     [Header("DEBUG")]
     [SerializeField] protected bool gizmos;
@@ -74,7 +79,10 @@ public abstract class Enemy : MonoBehaviour
 
         collider.enabled = true;
 
-        movement.StorePlayer(player);
+        if (movement != null) 
+            movement.StorePlayer(player);
+
+        onSpawnSequenceCompleted?.Invoke();
     }
 
     protected virtual void SetRendererVisibility(bool visibility)
@@ -99,7 +107,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    public void PassAway()
+    public virtual void PassAway()
     {
         onPassedAway?.Invoke(transform.position);
 
@@ -113,6 +121,11 @@ public abstract class Enemy : MonoBehaviour
         passAwayParticles.Play();
 
         Destroy(gameObject);
+    }
+
+    public Vector2 GetCenter()
+    {
+        return (Vector2)transform.position + collider.offset;
     }
 
     protected virtual void OnDrawGizmosSelected()
