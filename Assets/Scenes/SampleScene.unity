@@ -18031,7 +18031,7 @@ MonoBehaviour:
     - tStartEnd: {x: 0, y: 30}
       spawnFrequency: 1
       prefab: {fileID: 5955934464159482422, guid: eccc76a1673c6bc42a95b454f44b092c, type: 3}
-      spawnOnce: 0
+      spawnOnce: 1
 --- !u!114 &956641395
 MonoBehaviour:
   m_ObjectHideFlags: 0

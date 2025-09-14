@@ -170,8 +170,8 @@ public class Zoomby : Enemy
     {
         Vector2 targetPosition = Vector2.zero;
 
-        targetPosition.x = Random.Range(-14f, 14f);
-        targetPosition.y = Random.Range(-6f, 6f);
+        targetPosition.x = Random.Range(-Constants.arenaSize.x / 3, Constants.arenaSize.x / 3);
+        targetPosition.y = Random.Range(-Constants.arenaSize.x / 4, Constants.arenaSize.x / 4);
 
         return targetPosition;
     }
