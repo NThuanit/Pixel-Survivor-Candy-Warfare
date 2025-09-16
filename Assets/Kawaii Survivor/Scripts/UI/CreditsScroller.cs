@@ -26,6 +26,6 @@ public class CreditsScroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rt.anchoredPosition += Vector2.down * Time.deltaTime * scrollSpeed;
+        rt.anchoredPosition += Vector2.up * Time.deltaTime * scrollSpeed;
     }
 }

@@ -8,9 +8,12 @@ public class BumpyButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     [Header("Elements")]
     private Button button;
 
-    private void Awake()
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        button = GetComponent<Button>();
+        button = GetComponent<Button>();    
+
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -19,9 +22,11 @@ public class BumpyButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             return;
 
         LeanTween.cancel(button.gameObject);
-        LeanTween.scale(gameObject,  new Vector2(1.1f, 0.9f), 0.6f)
+
+        LeanTween.scale(gameObject, new Vector2(1.1f, 0.9f), 0.6f)
             .setEase(LeanTweenType.easeOutElastic)
-            .setIgnoreTimeScale(true); 
+            .setIgnoreTimeScale(true);
+
     }
 
     public void OnPointerUp(PointerEventData eventData)

@@ -83,6 +83,9 @@ public class WaveManager : MonoBehaviour, IGameStateListener
             {
                 Instantiate(segment.prefab, GetSpawnPosition(), Quaternion.identity, transform);
                 localCounters[i]++;
+
+                if (segment.spawnOnce)
+                    localCounters[i] += Mathf.Infinity;
             }
         }
 
@@ -129,8 +132,11 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         Vector2 offset = direction.normalized * Random.Range(6, 10);
         Vector2 targetPosition = (Vector2)player.transform.position + offset;
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -21, 21);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -11, 11);
+        if (!GameManager.instance.UseInfiniteMap)
+        {
+            targetPosition.x = Mathf.Clamp(targetPosition.x, -Constants.arenaSize.x / 2, Constants.arenaSize.x / 2);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, -Constants.arenaSize.x / 4, Constants.arenaSize.x / 4);
+        }
 
         return targetPosition;
     }
@@ -165,4 +171,5 @@ public struct WaveSegment
     [MinMaxSlider(0, 100)] public Vector2 tStartEnd;
     public float spawnFrequency;
     public GameObject prefab;
+    public bool spawnOnce;
 }

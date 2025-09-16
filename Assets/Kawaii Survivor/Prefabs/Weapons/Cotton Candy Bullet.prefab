@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 9026119531618661373}
   - component: {fileID: 5612282856132522739}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Cotton Candy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

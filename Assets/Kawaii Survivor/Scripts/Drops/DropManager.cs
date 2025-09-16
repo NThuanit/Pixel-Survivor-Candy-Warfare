@@ -21,6 +21,7 @@ public class DropManager : MonoBehaviour
     private void Awake()
     {
         Enemy.onPassedAway += EnemyPassedAwayCallback;
+        Enemy.onBossPassedAway += BossEnemeyPassedAwayCallback;
         Candy.onCollected  += ReleaseCandy;
         Cash.onCollected   += ReleaseCash;
     }
@@ -28,9 +29,11 @@ public class DropManager : MonoBehaviour
     private void OnDestroy()
     {
         Enemy.onPassedAway -= EnemyPassedAwayCallback;
+        Enemy.onBossPassedAway -= BossEnemeyPassedAwayCallback;
         Candy.onCollected  -= ReleaseCandy;
         Cash.onCollected   -= ReleaseCash;
     }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -66,11 +69,23 @@ public class DropManager : MonoBehaviour
         TryDropChest(enemyPosition);
     }
 
+
+    private void BossEnemeyPassedAwayCallback(Vector2 bossPosition)
+    {
+        DropChest(bossPosition);
+
+    }
+
     private void TryDropChest(Vector2 spawnPosition)
     {
         bool shouldSpawnChest = UnityEngine.Random.Range(0, 101) <= chestDropChance;
 
         if (!shouldSpawnChest) return;
+        DropChest(spawnPosition);   
+    }
+
+    private void DropChest(Vector2 spawnPosition)
+    {
         Instantiate(chestPrefab, spawnPosition, Quaternion.identity, transform);
     }
 
