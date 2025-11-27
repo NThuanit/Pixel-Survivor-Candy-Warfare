@@ -107,4 +107,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
 
     public void ShowSettings() => settingsPanel.SetActive(true);
     public void HideSettings() => settingsPanel.SetActive(false);
+
+    public void HideWeaponSelection() => weaponSelectionPanel.SetActive(false);
+    public void ShowWeaponSelection() => weaponSelectionPanel.SetActive(true);
 }

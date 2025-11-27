@@ -1,12 +1,12 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
 public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 {
-    [field: SerializeField] public WeaponDataSO WeaponData { get; private set; }    
-            
+    [field: SerializeField] public WeaponDataSO WeaponData { get; private set; }
+
     [Header("Settings")]
     [SerializeField] protected float range;
     [SerializeField] protected LayerMask enemyMask;
@@ -27,26 +27,26 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
     [Header("Level")]
     [field: SerializeField] public int Level { get; private set; }
 
-    [Header("Audio")]
-    protected AudioSource audioSource;
+    // --- XÓA HEADER AUDIO VÀ AUDIOSOURCE Ở ĐÂY (Không cần nữa) ---
 
     private void Awake()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.playOnAwake = false;
-        audioSource.clip = WeaponData.AttackSound;
+        // --- XÓA ĐOẠN TẠO AUDIOSOURCE Ở ĐÂY ---
 
-        if (animator != null && WeaponData.AnimatorOverride != null) 
+        // Chỉ giữ lại phần Animation
+        if (animator != null && WeaponData.AnimatorOverride != null)
             animator.runtimeAnimatorController = WeaponData.AnimatorOverride;
     }
 
     protected void PlayeAttackSound()
     {
-        if (!AudioManager.instance.IsSFXOn)
-            return;
-
-        audioSource.pitch = Random.Range(0.95f, 1.05f);
-        audioSource.Play();
+        // --- SỬA LỖI Ở ĐÂY ---
+        // Thay vì tự kiểm tra và tự phát, hãy gọi AudioManager
+        if (AudioManager.instance != null)
+        {
+            // AudioManager sẽ tự biết có đang Mute hay không để phát
+            AudioManager.instance.PlaySFX(WeaponData.AttackSound);
+        }
     }
 
     protected Enemy GetClosestEnemy()
@@ -86,7 +86,7 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         {
             isCiriticalHit = true;
             return Mathf.RoundToInt(damage * criticalPersent);
-        }  
+        }
 
         return damage;
     }
@@ -103,11 +103,11 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
     {
         Dictionary<Stat, float> calculatedStats = WeaponStatsCalculator.GetStats(WeaponData, Level);
 
-        damage              =   Mathf.RoundToInt(calculatedStats[Stat.Attack]);
-        attackDelay         =   1f / (calculatedStats[Stat.AttackSpeed]);
-        criticalChance      =   Mathf.RoundToInt(calculatedStats[Stat.CriticalChance]);
-        criticalPersent     =   calculatedStats[Stat.CriticalPercent];
-        range               =   calculatedStats[Stat.Range];
+        damage = Mathf.RoundToInt(calculatedStats[Stat.Attack]);
+        attackDelay = 1f / (calculatedStats[Stat.AttackSpeed]);
+        criticalChance = Mathf.RoundToInt(calculatedStats[Stat.CriticalChance]);
+        criticalPersent = calculatedStats[Stat.CriticalPercent];
+        range = calculatedStats[Stat.Range];
     }
 
     public void UpgradeTo(int targetLevel)
